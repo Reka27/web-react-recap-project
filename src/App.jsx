@@ -19,6 +19,9 @@ function App() {
   const handleButtonClick = () => {
     setShowForm(!showForm);
   };
+  const handleDeleteColor = (colorToDelete) => {
+    setColorCard(colorCard.filter((color) => color.id !== colorToDelete));
+  };
   return (
     <>
       <div className="button_title_container">
@@ -27,7 +30,6 @@ function App() {
           {showForm ? "CANCEL" : "ADD NEW THEME"}
         </Button>
       </div>
-
       {showForm && (
         <ColorForm
           initialColor={initialColors[0]}
@@ -35,8 +37,15 @@ function App() {
         />
       )}
       {colorCard.map((color) => {
-        return <Color key={color.id} color={color} />;
+        return (
+          <Color
+            key={color.id}
+            color={color}
+            onDeleteColor={handleDeleteColor}
+          />
+        );
       })}
+      {colorCard.length == 0 && <p>No Colors...Start by adding one!</p>}
     </>
   );
 }
