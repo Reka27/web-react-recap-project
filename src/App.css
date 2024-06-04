@@ -2,3 +2,8 @@ body {
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   padding: 10px;
 }
+.button_title_container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
