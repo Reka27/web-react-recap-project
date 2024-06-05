@@ -1,8 +1,8 @@
-import "./Button.css";
+//import "./Button.css";
 
 export default function Button({ children, type = "button", onClick }) {
   return (
-    <button type={type} className="button" onClick={onClick}>
+    <button type={type} onClick={onClick}>
       {children}
     </button>
   );

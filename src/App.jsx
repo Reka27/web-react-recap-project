@@ -22,6 +22,15 @@ function App() {
   const handleDeleteColor = (colorToDelete) => {
     setColorCard(colorCard.filter((color) => color.id !== colorToDelete));
   };
+  const handleEditColor = (colorToEdit) => {
+    console.log("shuld edit color");
+    setColorCard(
+      colorCard.map((color) => {
+        if (color.id == colorToEdit.id) return colorToEdit;
+        return color;
+      })
+    );
+  };
   return (
     <>
       <div className="button_title_container">
@@ -32,20 +41,24 @@ function App() {
       </div>
       {showForm && (
         <ColorForm
-          initialColor={initialColors[0]}
-          onAddColor={handleAddColor}
+          currentColor={initialColors[0]}
+          currentAction={handleAddColor}
         />
       )}
-      {colorCard.map((color) => {
-        return (
-          <Color
-            key={color.id}
-            color={color}
-            onDeleteColor={handleDeleteColor}
-          />
-        );
-      })}
-      {colorCard.length == 0 && <p>No Colors...Start by adding one!</p>}
+      {colorCard.length == 0 ? (
+        <p>No Colors...Start by adding one!</p>
+      ) : (
+        colorCard.map((color) => {
+          return (
+            <Color
+              key={color.id}
+              color={color}
+              onDeleteColor={handleDeleteColor}
+              onEditColor={handleEditColor}
+            />
+          );
+        })
+      )}
     </>
   );
 }
