@@ -1,16 +1,10 @@
 import ColorForm from "../Form/ColorForm";
 import "./Color.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Color({ color, onDeleteColor, onEditColor }) {
   const [deleteColor, setDeleteColor] = useState(false);
   const [editColor, setEditColor] = useState(false);
-  const [confirmDelete, setConfirmDelete] = useState(false);
-  useEffect(() => {
-    if (confirmDelete) {
-      onDeleteColor(color.id);
-    }
-  }, [confirmDelete, onDeleteColor, color.id]);
 
   const handleDelete = () => {
     return setDeleteColor(true);
@@ -32,8 +26,8 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
       {editColor ? (
         <>
           <ColorForm
-            currentColor={color}
-            currentAction={onEditColor}
+            color={color}
+            onEditColor={onEditColor}
             editColor={editColor}
             setEditColor={setEditColor}
           />
@@ -45,7 +39,7 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
             <div>
               <p className="color-card-hightlight">Really Delete?</p>
               <button onClick={() => setDeleteColor(false)}>CANCEL</button>
-              <button onClick={() => setConfirmDelete(true)}>DELETE</button>
+              <button onClick={() => onDeleteColor(color.id)}>DELETE</button>
             </div>
           ) : (
             <>

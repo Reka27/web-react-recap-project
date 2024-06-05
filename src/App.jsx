@@ -15,6 +15,7 @@ function App() {
   });
   const handleAddColor = (newColor) => {
     setColorCard([{ id: uid(), ...newColor }, ...colorCard]);
+    setShowForm(false);
   };
   const handleButtonClick = () => {
     setShowForm(!showForm);
@@ -23,7 +24,7 @@ function App() {
     setColorCard(colorCard.filter((color) => color.id !== colorToDelete));
   };
   const handleEditColor = (colorToEdit) => {
-    console.log("shuld edit color");
+    console.log(colorToEdit, "Edit");
     setColorCard(
       colorCard.map((color) => {
         if (color.id == colorToEdit.id) return colorToEdit;
@@ -40,10 +41,7 @@ function App() {
         </Button>
       </div>
       {showForm && (
-        <ColorForm
-          currentColor={initialColors[0]}
-          currentAction={handleAddColor}
-        />
+        <ColorForm color={initialColors[0]} onAddColor={handleAddColor} />
       )}
       {colorCard.length == 0 ? (
         <p>No Colors...Start by adding one!</p>

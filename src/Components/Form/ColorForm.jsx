@@ -2,8 +2,9 @@ import Button from "../Button/Button";
 import ColorInput from "../ColorInput/ColorInput";
 
 export default function ColorForm({
-  currentColor,
-  currentAction,
+  color,
+  onAddColor,
+  onEditColor,
   editColor,
   setEditColor,
 }) {
@@ -11,10 +12,14 @@ export default function ColorForm({
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    const newColor = { ...data, id: currentColor.id };
+    const newColor = { ...data, id: color.id };
     console.log(newColor);
-    currentAction(newColor);
-    editColor && setEditColor(false);
+    if (editColor) {
+      onEditColor(newColor);
+      setEditColor(false);
+    } else {
+      onAddColor(data);
+    }
   }
   return (
     <form className="theme_creator_form" onSubmit={handleSubmit}>
@@ -22,25 +27,17 @@ export default function ColorForm({
         <div>
           <label htmlFor="role">Role</label>
           <br />
-          <input
-            type="text"
-            name="role"
-            id="role"
-            defaultValue={currentColor.role}
-          />
+          <input type="text" name="role" id="role" defaultValue={color.role} />
         </div>
         <div>
           <label htmlFor="hex">Hex</label>
           <br />
-          <ColorInput id="hex" defaultValue={currentColor.hex} />
+          <ColorInput id="hex" defaultValue={color.hex} />
         </div>
         <div>
           <label htmlFor="contrastText">Contrast Text</label>
           <br />
-          <ColorInput
-            id="contrastText"
-            defaultValue={currentColor.contrastText}
-          />
+          <ColorInput id="contrastText" defaultValue={color.contrastText} />
         </div>
       </div>
       <div>
