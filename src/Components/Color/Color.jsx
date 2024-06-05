@@ -2,9 +2,15 @@ import ColorForm from "../Form/ColorForm";
 import "./Color.css";
 import { useState } from "react";
 
-export default function Color({ color, onDeleteColor, onEditColor }) {
+export default function Color({
+  color,
+  onDeleteColor,
+  onEditColor,
+  onCopyColor,
+}) {
   const [deleteColor, setDeleteColor] = useState(false);
   const [editColor, setEditColor] = useState(false);
+  const [copyColor, setCopyColor] = useState(false);
 
   const handleDelete = () => {
     return setDeleteColor(true);
@@ -12,6 +18,23 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
   const handleEdit = () => {
     setEditColor(true);
   };
+  const handleCopy = () => {
+    setCopyColor(true);
+    onCopyColor(color.hex);
+    // Attach the copy event listener
+    document.addEventListener("copy", handleCopy);
+    setTimeout(() => {
+      setCopyColor(false);
+      document.removeEventListener("copy", handleCopy);
+    }, 3000);
+  };
+
+  /* const handlePaste = () => {
+    setTimeout(() => {
+      setCopyColor(false);
+      document.removeEventListener("paste", handlePaste);
+    }, 2000);
+  };*/
   return (
     <div
       className="color-card"
@@ -21,6 +44,9 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
       }}
     >
       <h3 className="color-card-hightlight">{color.hex}</h3>
+      <button onClick={handleCopy}>
+        {copyColor ? "SUCCESSFULLY COPIED" : "COPY"}
+      </button>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
       {editColor ? (
