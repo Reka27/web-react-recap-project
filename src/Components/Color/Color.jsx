@@ -1,7 +1,7 @@
 import ColorForm from "../Form/ColorForm";
 import "./Color.css";
 import { useState } from "react";
-
+import ContrastChecker from "../ContrastChecker/ContrastChecker";
 export default function Color({
   color,
   onDeleteColor,
@@ -49,6 +49,11 @@ export default function Color({
       </button>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
+      <ContrastChecker
+        hex={color.hex}
+        contrastText={color.contrastText}
+      ></ContrastChecker>
+      <br />
       {editColor ? (
         <>
           <ColorForm
