@@ -23,6 +23,9 @@ function App() {
   const handleDeleteColor = (colorToDelete) => {
     setColorCard(colorCard.filter((color) => color.id !== colorToDelete));
   };
+  const handleCopyColor = (hexValue) => {
+    navigator.clipboard.writeText(hexValue);
+  };
   const handleEditColor = (colorToEdit) => {
     console.log(colorToEdit, "Edit");
     setColorCard(
@@ -53,6 +56,7 @@ function App() {
               color={color}
               onDeleteColor={handleDeleteColor}
               onEditColor={handleEditColor}
+              onCopyColor={handleCopyColor}
             />
           );
         })
